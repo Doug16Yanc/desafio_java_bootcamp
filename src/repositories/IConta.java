@@ -1,9 +1,11 @@
 package repositories;
 
+import domain.Cliente;
 import domain.Conta;
 
 public interface IConta {
     double depositar(double valor);
-    double transferir(double valor, Conta conta);
-    void imprimirExtrato();
+    double sacar(double valor);
+    double transferir(double valor, Cliente cliente, Conta conta);
+    void imprimirExtrato(Cliente cliente);
 }

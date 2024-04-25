@@ -2,7 +2,6 @@ package domain;
 
 import repositories.IConta;
 
-import static application.Program.sc;
 
 public class Conta implements IConta {
 
@@ -11,61 +10,14 @@ public class Conta implements IConta {
 
     protected int agencia;
     protected int numero;
-    protected static double saldo;
+    protected double saldo;
     protected Cliente cliente;
 
-    public Conta(Cliente cliente){
+    public Conta(double saldo, Cliente cliente){
         this.agencia = Conta.agenciaPadrao;
         this.numero = sequencial++;
+        this.saldo = saldo;
         this.cliente = cliente;
-    }
-
-    public static double sacar(double valor) {
-        double novoSaldo = saldo;
-        System.out.println("Qual valor que deseja sacar? ");
-        valor = sc.nextDouble();
-
-        if (valor <= saldo){
-            novoSaldo -= valor;
-        }
-        else{
-            System.out.println("Saldo insuficiente para realizar operação.\n");
-
-        }
-        return novoSaldo;
-    }
-
-    @Override
-    public double depositar(double valor) {
-        return 0.0;
-    }
-
-    @Override
-    public double transferir(double valor, Conta conta) {
-        double novoSaldo = saldo;
-        System.out.println("Digite o código do cliente do qual deseja transferir:");
-        int codigo = sc.nextInt();
-
-        if (cliente.getCodigo() == codigo){
-            System.out.println("Titular encontrado com nome : " + cliente.getNome() + "\n");
-            System.out.println("Digite o valor que deseja transferir: ");
-            valor = sc.nextDouble();
-
-            if (valor <= novoSaldo){
-                System.out.println("Transferência de R$ %.2f " + valor + " realizado para " + cliente.getNome() + " com sucesso.\n");
-                novoSaldo -= valor;
-                conta.setSaldo(valor);
-            }
-            else{
-                System.out.println("Saldo insuficiente para realizar transferência.\n");
-            }
-        }
-        return novoSaldo;
-    }
-
-    @Override
-    public void imprimirExtrato() {
-
     }
 
     public static int getSequencial() {
@@ -107,10 +59,32 @@ public class Conta implements IConta {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    protected void imprimirInformaçoes(){
-        System.out.println("\nTitular : " + getCliente() +
-                           "\nAgência : " + getAgencia() +
-                           "\nNúmero : " + getNumero() +
-                           "\nSaldo : R$ %.2f" + getSaldo());
+
+    @Override
+    public double sacar(double valor) {
+        return 0.0;
+    }
+
+    @Override
+    public double depositar(double valor) {
+        return 0.0;
+    }
+
+    @Override
+    public double transferir(double valor, Cliente cliente, Conta conta) {
+        return 0.0;
+    }
+
+    @Override
+    public void imprimirExtrato(Cliente cliente) {
+    }
+
+
+    protected void imprimirInformaçoes(Cliente cliente){
+        System.out.println("\nTitular : " + cliente.getNome() +
+                           "\nAgência : " + agencia +
+                           "\nNúmero : " + numero +
+                           "\nSaldo : R$ " + saldo +
+                            "\n\n");
     }
 }
